@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>WHOOP</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+</head>
+
+<body>
+    <div class="main_train">
+        <div class="navbar">
+            <div class="icon">
+                <a href="index.html" class="logo-link">
+                    <img src="../assets/images/logo.png" alt="Tjenare logo" class="logo-img">
+                </a>
+            </div>
+
+            <div class="menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="train.html">Training</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="whoop.html">WHOOP</a></li>
+                            <li><a href="coros.html">COROS</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="crochet.html">Crochet</a></li>
+                    <li><a href="draw.html">Drawing</a></li>
+                    <li><a href="bake.html">WakeyBakey</a></li>
+                    <li><a href="watch.html">What to Watch</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="training-data">
+            <h2>Training Data</h2>
+            <table id="training-table">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Recovery</th>
+                    <th>Resting HR</th>
+                    <th>HRV</th>
+                    <th>Day Strain</th>
+                    <th>Sleep %</th>
+                    <th>Sleep Debt</th>
+                    <th>Asleep (min)</th>
+                    <th>Workout Time</th>
+                    <th>Calories</th>
+                    <th>Strain</th>
+                    <th>Max HR</th>
+                    <th>Count</th>
+                </tr>
+                </thead>
+                <tbody id="training-body"></tbody>
+            </table>
+        </div>
+          
+        <script>
+            fetch('http://localhost:3000/training-data')
+              .then(res => res.json())
+              .then(data => {
+                const body = document.getElementById('training-body');
+                data.forEach(row => {
+                  const tr = document.createElement('tr');
+                  tr.innerHTML = `
+                    <td>${row.date.split('T')[0]}</td>
+                    <td>${row.recovery_score ?? '-'}</td>
+                    <td>${row.resting_hr ?? '-'}</td>
+                    <td>${row.hrv ?? '-'}</td>
+                    <td>${row.day_strain ?? '-'}</td>
+                    <td>${row.sleep_performance ?? '-'}</td>
+                    <td>${row.sleep_debt ?? '-'}</td>
+                    <td>${row.asleep_duration ?? '-'}</td>
+                    <td>${row.workout_duration ?? '-'}</td>
+                    <td>${row.workout_calories ?? '-'}</td>
+                    <td>${row.workout_strain ?? '-'}</td>
+                    <td>${row.max_hr ?? '-'}</td>
+                    <td>${row.workout_count ?? '-'}</td>
+                  `;
+                  body.appendChild(tr);
+                });
+              })
+              .catch(err => {
+                console.error('Error loading training data:', err);
+              });
+        </script>            
+
+        <footer class="footer">
+            &copy; 2025 Tjenare. All rights reserved.
+        </footer>
+    </div>
+</body>
+
+</html>

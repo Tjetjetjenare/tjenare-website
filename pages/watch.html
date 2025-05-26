@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>WtW</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+</head>
+
+<body>
+    <div class="main_watch">
+        <div class="navbar">
+            <div class="icon">
+                <a href="index.html" class="logo-link">
+                    <img src="../assets/images/logo.png" alt="Tjenare logo" class="logo-img">
+                </a>
+            </div>
+
+            <div class="menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="train.html">Training</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="whoop.html">WHOOP</a></li>
+                            <li><a href="coros.html">COROS</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="crochet.html">Crochet</a></li>
+                    <li><a href="draw.html">Drawing</a></li>
+                    <li><a href="bake.html">WakeyBakey</a></li>
+                    <li><a href="watch.html">What to Watch</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="movie-section">
+            <div class="genre-buttons">
+                <button onclick="fetchRandomMovie(this)">Random movie</button>
+                <button onclick="fetchRandomGenre('Drama', this)">Drama</button>
+                <button onclick="fetchRandomGenre('Fantasy', this)">Fantasy</button>
+                <button onclick="fetchRandomGenre('Thriller', this)">Thriller</button>
+                <button onclick="fetchRandomGenre('Romance', this)">Romance</button>
+                <button onclick="fetchRandomGenre('Sci-Fi', this)">Sci-Fi</button>
+                <button onclick="fetchRandomGenre('Horror', this)">Horror</button>
+                <button onclick="fetchRandomGenre('Comedy', this)">Comedy</button>
+                <button onclick="fetchRandomGenre('Action', this)">Action</button>
+                <button onclick="fetchRandomGenre('Documentary', this)">Documentary</button>
+                <button onclick="fetchRandomGenre('Sport', this)">Sport</button>
+                <button onclick="fetchRandomGenre('Adventure', this)">Adventure</button>
+                <button onclick="fetchRandomGenre('Music', this)">Music</button>
+                <button onclick="fetchRandomGenre('Biography', this)">Biography</button>
+            </div>
+
+            <div id="selected-movie" class="movie-card"></div>
+        </div>
+          
+        <footer class="footer">
+            &copy; 2025 Tjenare. All rights reserved.
+        </footer>
+    </div>
+
+    <script>
+        let activeButton = null;
+
+        function highlightActiveButton(button) {
+            if (activeButton) {
+                activeButton.classList.remove('active-button');
+            }
+            button.classList.add('active-button');
+            activeButton = button;
+        }
+
+        async function fetchRandomMovie(buttonElement) {
+            const selectedMovie = document.getElementById('selected-movie');
+            selectedMovie.innerHTML = "Movie loading...";
+
+            try {
+                const response = await fetch('http://localhost:3000/random-movie');
+                const movie = await response.json();
+                
+                selectedMovie.innerHTML = `
+                    <h2>${movie.title} (${movie.year})</h2>
+                    <p><strong>Original title:</strong> ${movie.original_title || 'Unknown'}</p>
+                    <p><strong>Director:</strong> ${movie.directors || 'Unknown'}</p>
+                    <p><strong>Genre:</strong> ${movie.genres || 'Unknown'}</p>
+                    <p><strong>Runtime:</strong> ${movie.runtime_mins ? movie.runtime_mins + ' min' : 'Unknown'}</p>
+                    <p><strong>IMDb rating:</strong> ${movie.imdb_rating || 'N/A'}</p>
+                    <p><a href="${movie.url}" target="_blank">More info on IMDb</a></p>
+                `;
+
+                highlightActiveButton(buttonElement);
+
+            } catch (error) {
+                console.error('Error fetching movie:', error);
+                selectedMovie.innerHTML = "Could not load movie.";
+            }
+        }
+
+        async function fetchRandomGenre(genre, buttonElement) {
+            const selectedMovie = document.getElementById('selected-movie');
+            selectedMovie.innerHTML = "Movie loading...";
+
+            try {
+                const response = await fetch(`http://localhost:3000/random-movie/${genre}`);
+                const movie = await response.json();
+                
+                selectedMovie.innerHTML = `
+                    <h2>${movie.title} (${movie.year})</h2>
+                    <p><strong>Original title:</strong> ${movie.original_title || 'Unknown'}</p>
+                    <p><strong>Director:</strong> ${movie.directors || 'Unknown'}</p>
+                    <p><strong>Genre:</strong> ${movie.genres || 'Unknown'}</p>
+                    <p><strong>Runtime:</strong> ${movie.runtime_mins ? movie.runtime_mins + ' min' : 'Unknown'}</p>
+                    <p><strong>IMDb rating:</strong> ${movie.imdb_rating || 'N/A'}</p>
+                    <p><a href="${movie.url}" target="_blank">More info on IMDb</a></p>
+                `;
+
+                highlightActiveButton(buttonElement);
+
+            } catch (error) {
+                console.error('Error fetching movie:', error);
+                selectedMovie.innerHTML = "Could not fetch movie.";
+            }
+        }
+    </script>    
+</body>
+
+</html>

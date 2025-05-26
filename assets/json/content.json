@@ -1,0 +1,30 @@
+{
+    "description": {
+        "title": "Tjenare!",
+        "text": [
+            "Tjenare is a Swedish greeting, similar to Hi or Hello. <b>Tjetjetjenare</b>, which is a jokingly extravagant way to say it, is an alias I've used extensively online for well over a decade.",
+            "This website is a collection of my hobbies and interests, including baking, crochet, drawing, and training.",
+            "The <b>training</b> section is a personal project where I log my workouts and progress.",
+            "One part contains my WHOOP-data and is most of my training sessions leading up to me completing an Ironman in August of 2022. The other part contains training data from my COROS watch, which I started using in 2023. This data will be updated continuously.",
+            "The <b>chrochet</b> section is a collection of my crochet projects, which I have been working on since late January of 2025.",
+            "The <b>drawing</b> section is a collection of my drawings. I am a big fan of symmetry and patterns, and I have been drawing these patterns since I was 14 years old.",
+            "The <b>baking</b> section is a collection of my favorite recipes, which I have gathered over the years.",
+            "I hope you enjoy your visit!"
+        ]
+    },
+    "baking": {
+        "title": "Baking, baking and baking",
+        "text": [
+            "Sugar, spice and everything nice. These were the ingredients chosen to create the perfect baked goods!",
+            "This is my website containing all my exploits pertaining to baking."
+        ]
+    },
+    "drawing": {
+        "title": "Patterns!",
+        "text": [
+            "As stated on the main page, I am a big fan of symmetry and patterns. So much that I have been drawing the patterns you see on this page since I was 14 years old.",
+            "Each picture takes about 30 hours to draw, and the funny thing is that every time I begin drawing a new pattern, I am already thinking about the next one.",
+            "I hope you enjoy watching what I've created over half of my lifetime."
+        ]
+    }
+}

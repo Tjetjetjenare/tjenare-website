@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>WakeyBakey</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+</head>
+
+<body>
+    <div class="main_bake">
+        <div class="navbar">
+            <div class="icon">
+                <a href="../pages/index.html" class="logo-link">
+                    <img src="../assets/images/logo.png" alt="Tjenare logo" class="logo-img">
+                </a>
+            </div>
+
+            <div class="menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="train.html">Training</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="whoop.html">WHOOP</a></li>
+                            <li><a href="coros.html">COROS</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="crochet.html">Crochet</a></li>
+                    <li><a href="draw.html">Drawing</a></li>
+                    <li><a href="bake.html">WakeyBakey</a></li>
+                    <li><a href="watch.html">What to Watch</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="description_bake">
+            <h1 id="baking-title"></h1>
+            <p id="baking-text"></p>
+        </div>
+        <script>
+            fetch('../assets/json/content.json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('baking-title').textContent = data.baking.title;
+                    document.getElementById('baking-text').innerHTML = data.baking.text.join('<br><br>');
+                })
+                .catch(error => console.error('Error loading content:', error));
+        </script>
+    </div>
+
+    <footer class="footer">
+        &copy; 2025 Tjenare. All rights reserved.
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Drawing</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+</head>
+
+<body>
+  <div class="main_draw">
+    <div class="navbar">
+      <div class="icon">
+        <a href="index.html" class="logo-link">
+          <img src="../assets/images/logo.png" alt="Tjenare logo" class="logo-img">
+        </a>
+      </div>
+
+      <div class="menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li class="dropdown">
+            <a href="train.html">Training</a>
+            <ul class="dropdown-menu">
+              <li><a href="whoop.html">WHOOP</a></li>
+              <li><a href="coros.html">COROS</a></li>
+            </ul>
+          </li>
+          <li><a href="crochet.html">Crochet</a></li>
+          <li><a href="draw.html">Drawing</a></li>
+          <li><a href="bake.html">WakeyBakey</a></li>
+          <li><a href="watch.html">What to Watch</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="description">
+      <h1 id="drawing-title"></h1>
+      <p id="drawing-text"></p>
+    </div>
+    <script>
+      fetch('../assets/json/content.json')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('drawing-title').textContent = data.drawing.title;
+          document.getElementById('drawing-text').innerHTML = data.drawing.text.join('<br><br>');
+        })
+        .catch(error => console.error('Error loading content:', error));
+    </script>
+
+    <div class="gallery-container">
+      <div class="gallery" id="gallery"></div>
+
+      <div class="preview-section">
+        <div class="preview" id="preview">
+          <img id="preview-img" src="" alt="Preview">
+        </div>
+        <div class="metadata">
+          <h2 id="meta-title"></h2>
+          <hr>
+          <p id="meta-date"></p>
+          <hr>
+          <p id="meta-description"></p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      fetch('../assets/json/drawings.json')
+        .then(response => response.json())
+        .then(data => {
+          const gallery = document.getElementById('gallery');
+          const preview = document.getElementById('preview-img');
+          const metaTitle = document.getElementById('meta-title');
+          const metaDate = document.getElementById('meta-date');
+          const metaDescription = document.getElementById('meta-description');
+
+          if (data.drawings.length > 0) {
+            const first = data.drawings[0];
+            preview.src = `../assets/images/drawings/${first.file}`;
+            metaTitle.textContent = first.title;
+            metaDate.textContent = first.date;
+            metaDescription.textContent = first.description;
+          }
+
+          data.drawings.forEach(drawing => {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('thumbnail-wrapper');
+
+            const img = document.createElement('img');
+            img.src = `../assets/images/drawings/${drawing.file}`;
+            img.alt = drawing.title;
+            img.classList.add('drawing-img');
+
+            const label = document.createElement('p');
+            label.textContent = drawing.title;
+            label.classList.add('thumbnail-label');
+
+            img.addEventListener('click', () => {
+              preview.src = img.src;
+              metaTitle.textContent = drawing.title;
+              metaDate.textContent = drawing.date;
+              metaDescription.textContent = drawing.description;
+
+              document.querySelectorAll('.drawing-img').forEach(i =>
+                i.classList.remove('selected')
+              );
+              img.classList.add('selected');
+            });
+
+            wrapper.appendChild(img);
+            wrapper.appendChild(label);
+            gallery.appendChild(wrapper);
+          });
+        })
+        .catch(error => console.error('Error loading drawings:', error));
+
+      function zoomImage() {
+        const previewImg = document.getElementById('preview-img');
+        if (!previewImg.src || previewImg.src.endsWith('/')) {
+          return;
+        }
+
+        const overlay = document.createElement('div');
+        overlay.className = 'fullscreen-overlay';
+
+        const zoomed = document.createElement('img');
+        zoomed.src = previewImg.src;
+        zoomed.className = 'fullscreen-img';
+
+        overlay.appendChild(zoomed);
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener('click', () => {
+          overlay.remove();
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('preview-img').addEventListener('click', zoomImage);
+      });
+    </script>
+
+    <footer class="footer">
+      &copy; 2025 Tjenare. All rights reserved.
+    </footer>
+  </div>
+</body>
+
+</html>
